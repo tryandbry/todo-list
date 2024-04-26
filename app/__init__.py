@@ -9,6 +9,9 @@ def create_app(config_class=Config):
 
     db.init_app(app)
 
+    from lists import bp as lists_bp
+    app.register_blueprint(lists_bp, url_prefix='/lists')
+
     @app.route('/health')
     def health():
         return 'OK'
