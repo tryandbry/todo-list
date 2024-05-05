@@ -13,3 +13,7 @@ class TimestampMixin:
         default=func.now(),
         onupdate=func.now()
     )
+
+
+## TODO: Try defining the `timezone=True` attribute without setting a new type_map
+## ref: https://docs.sqlalchemy.org/en/20/core/compiler.html#utc-timestamp-function
