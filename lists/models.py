@@ -1,15 +1,16 @@
-from sqlalchemy.orm import Mapped, mapped_column, String
-from sqlalchemy.sql import func
-from datetime import datetime
+from sqlalchemy import String
+from sqlalchemy.orm import Mapped, mapped_column
 from db import db
+from db.timestamp_mixin import TimestampMixin
 
 
-class List(db.Model):
+class List(TimestampMixin, db.Model):
     __tablename__ = "lists"
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(255))
-    created_at: Mapped[datetime.datetime] = mapped_column(default=func.now())
-    modified_at: Mapped[datetime.datetime] = mapped_column(onupdate=func.utc_timestamp())
+
+    def __repr__(self) -> str:
+        return f'List(id={self.id!r}, name={self.name!r}, created_at={self.created_at!r}, updated_at={self.updated_at!r}'
 
 
 """
