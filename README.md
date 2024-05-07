@@ -24,7 +24,11 @@ docker compose up -d db
 
 Migrate database
 ```
-make db.migrate
+make shell
+from lists.models import List
+from db import db
+db.create_all()
+// make db.migrate
 ```
 Note: password is `password`
 

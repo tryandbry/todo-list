@@ -1,13 +1,5 @@
-INSERT INTO post VALUES(1,'Post #221','Content #221');
-INSERT INTO post VALUES(2,'Post #661','Content #661');
-INSERT INTO post VALUES(3,'Post #317','Content #317');
-INSERT INTO post VALUES(4,'Post #564','Content #564');
-INSERT INTO post VALUES(5,'Post #27','Content #27');
-INSERT INTO post VALUES(6,'Post #735','Content #735');
-INSERT INTO post VALUES(7,'Post #598','Content #598');
-INSERT INTO post VALUES(8,'Post #941','Content #941');
-INSERT INTO post VALUES(9,'Post #224','Content #224');
-INSERT INTO post VALUES(10,'Post #668','Content #668');
-INSERT INTO question VALUES(1,'Why is the sky blue?','Because... Why not?');
-INSERT INTO question VALUES(2,'What is love?','Baby don''t hurt me!');
-INSERT INTO question VALUES(3,'yo','mama');
+LOCK TABLES `lists` WRITE;
+/*!40000 ALTER TABLE `lists` DISABLE KEYS */;
+INSERT INTO `lists` VALUES (1,'world','2024-05-05 15:56:05','2024-05-05 16:09:02');
+/*!40000 ALTER TABLE `lists` ENABLE KEYS */;
+UNLOCK TABLES;
