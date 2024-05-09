@@ -1,6 +1,7 @@
 from . import bp
 from db import db
 from .models import List
+from .serializers import ListSchema
 from flask import jsonify
 
 
@@ -8,4 +9,6 @@ from flask import jsonify
 def index():
     stmt = db.select(List).order_by(List.updated_at)
     lists = db.session.execute(stmt).scalars().all()
-    return jsonify(lists)
+    schema = ListSchema(many=True)
+    result = schema.dumps(lists)
+    return result

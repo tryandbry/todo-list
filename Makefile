@@ -24,3 +24,7 @@ db.migrate:
 .PHONY: db.seed
 db.seed:
 	mysql -u ${MYSQL_USER} -p -h ${MYSQL_HOST} ${MYSQL_DATABASE} < db/seed.sql
+
+.PHONY: db.client
+db.client:
+	mysql -u ${MYSQL_USER} -p -h ${MYSQL_HOST} ${MYSQL_DATABASE}
