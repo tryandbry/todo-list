@@ -28,3 +28,7 @@ db.seed:
 .PHONY: db.client
 db.client:
 	mysql -u ${MYSQL_USER} -p -h ${MYSQL_HOST} ${MYSQL_DATABASE}
+
+.PHONY: db.dump
+db.dump:
+	mysqldump -h ${MYSQL_HOST} -u root -p ${MYSQL_DATABASE} > db/todo.sql
