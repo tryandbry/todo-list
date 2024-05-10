@@ -2,7 +2,9 @@ from . import bp
 from db import db
 from .models import List
 from .serializers import ListSchema
-from flask import jsonify
+from .validators import ListValidationSchema
+from flask import jsonify, request
+from marshmallow import ValidationError
 import uuid
 
 
@@ -15,9 +17,23 @@ def index():
     return result
 
 @bp.route('/<listId>', methods=['GET'])
-def getList(listId):
-    listUuid = uuid.UUID(listId)
-    list = db.session.query(List).filter(List.uuid == listUuid).first()
+def show(listId):
+    list_uuid = uuid.UUID(listId)
+    list = db.session.query(List).filter(List.uuid == list_uuid).first()
     schema = ListSchema()
     result = schema.dumps(list)
     return result
+
+@bp.route('/', methods=['POST'])
+def create():
+    content_type = request.headers.get('Content-Type')
+    if content_type != 'application/json':
+        return 'Content-Type not supported!'
+    
+    try:
+        body = ListValidationSchema().load(request.json)
+        # TODO create a List() instance and save to db
+    except ValidationError as err:
+        return err.messages
+    
+    return body
