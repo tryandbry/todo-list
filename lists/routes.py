@@ -2,8 +2,8 @@ from . import bp
 from db import db
 from .models import List
 from .serializers import ListSchema
-from .validators import ListValidationSchema
-from flask import jsonify, request
+from .validators import GetListValidationSchema, PostListValidationSchema
+from flask import jsonify, request, abort
 from marshmallow import ValidationError
 import uuid
 
@@ -16,10 +16,18 @@ def index():
     result = schema.dumps(lists)
     return result
 
-@bp.route('/<listId>', methods=['GET'])
-def show(listId):
-    list_uuid = uuid.UUID(listId)
+@bp.route('/<list_id>', methods=['GET'])
+def show(list_id):
+    try:
+        path_params = GetListValidationSchema().load(request.view_args)
+    except ValidationError as err:
+        return err.messages, 400
+
+    list_uuid = uuid.UUID(path_params['list_id'])
     list = db.session.query(List).filter(List.uuid == list_uuid).first()
+    if list == None:
+        abort(404)
+
     schema = ListSchema()
     result = schema.dumps(list)
     return result
@@ -28,10 +36,10 @@ def show(listId):
 def create():
     content_type = request.headers.get('Content-Type')
     if content_type != 'application/json':
-        return 'Content-Type not supported!'
+        return 'Content-Type not supported!', 400
     
     try:
-        body = ListValidationSchema().load(request.json)
+        body = PostListValidationSchema().load(request.json)
     except ValidationError as err:
         return err.messages
 
