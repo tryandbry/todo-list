@@ -37,7 +37,7 @@ def create():
     content_type = request.headers.get('Content-Type')
     if content_type != 'application/json':
         return 'Content-Type not supported!', 400
-    
+
     try:
         body = PostListValidationSchema().load(request.json)
     except ValidationError as err:
@@ -47,6 +47,29 @@ def create():
         name=body['name']
     )
     db.session.add(list)
+    db.session.commit()
+    schema = ListSchema()
+    result = schema.dumps(list)
+    return result
+
+@bp.route('/<list_id>', methods=['PATCH'])
+def update(list_id):
+    content_type = request.headers.get('Content-Type')
+    if content_type != 'application/json':
+        return 'Content-Type not supported!', 400
+
+    try:
+        path_params = GetListValidationSchema().load(request.view_args)
+        body_params = PostListValidationSchema().load(request.json)
+    except ValidationError as err:
+        return err.messages, 400
+
+    list_uuid = uuid.UUID(path_params['list_id'])
+    list = db.session.query(List).filter(List.uuid == list_uuid).first()
+    if list == None:
+        abort(404)
+
+    list.name = body_params['name']
     db.session.commit()
     schema = ListSchema()
     result = schema.dumps(list)

@@ -1,0 +1,5 @@
+url http://127.0.0.1:5000/lists/1f7a1a7e-8cfc-484b-b083-b8d2ada1ec2e
+Header "Content-Type: application/json"
+Request PATCH
+location
+data @patch.json
