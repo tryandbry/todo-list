@@ -32,8 +32,14 @@ def create():
     
     try:
         body = ListValidationSchema().load(request.json)
-        # TODO create a List() instance and save to db
     except ValidationError as err:
         return err.messages
-    
-    return body
+
+    list = List(
+        name=body['name']
+    )
+    db.session.add(list)
+    db.session.commit()
+    schema = ListSchema()
+    result = schema.dumps(list)
+    return result
