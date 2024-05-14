@@ -13,4 +13,4 @@ class List(TimestampMixin, db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(255))
     uuid: Mapped[Uuid] = mapped_column(Uuid, unique=True, default=uuid.uuid4)
-    items: Mapped[typing.List["Item"]] = relationship("Item", cascade="all, delete")
+    items: Mapped[typing.List["Item"]] = relationship("Item", back_populates="list", cascade="all, delete")

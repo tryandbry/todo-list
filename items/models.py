@@ -14,4 +14,4 @@ class Item(TimestampMixin, db.Model):
     uuid: Mapped[Uuid] = mapped_column(Uuid, unique=True, default=uuid.uuid4)
     completed: Mapped[bool] = mapped_column(Boolean, default=False)
     list_id: Mapped[int] = mapped_column(ForeignKey("lists.id"))
-    list: Mapped["List"] = relationship("List")
+    list: Mapped["List"] = relationship("List", back_populates="items")

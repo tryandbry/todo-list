@@ -5,6 +5,7 @@ from .serializers import ListSchema
 from .validators import GetListValidationSchema, PostListValidationSchema
 from flask import jsonify, request, abort, Response
 from marshmallow import ValidationError
+from items.nested_controllers import item_index_by_list
 import uuid
 
 
@@ -90,3 +91,17 @@ def destroy(list_id):
     db.session.delete(list)
     db.session.commit()
     return Response(status=204)
+
+@bp.route('/<list_id>/items', methods=['GET'])
+def item_index(list_id):
+    try:
+        path_params = GetListValidationSchema().load(request.view_args)
+    except ValidationError as err:
+        return err.messages, 400
+
+    list_uuid = uuid.UUID(path_params['list_id'])
+    list = db.session.query(List).filter(List.uuid == list_uuid).first()
+    if list == None:
+        abort(404)
+
+    return item_index_by_list(list)
