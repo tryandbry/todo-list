@@ -3,7 +3,7 @@ from db import db
 from .models import List
 from .serializers import ListSchema
 from .validators import GetListValidationSchema, PostListValidationSchema
-from flask import jsonify, request, abort
+from flask import jsonify, request, abort, Response
 from marshmallow import ValidationError
 import uuid
 
@@ -74,3 +74,19 @@ def update(list_id):
     schema = ListSchema()
     result = schema.dumps(list)
     return result
+
+@bp.route('/<list_id>', methods=['DELETE'])
+def destroy(list_id):
+    try:
+        path_params = GetListValidationSchema().load(request.view_args)
+    except ValidationError as err:
+        return err.messages, 400
+
+    list_uuid = uuid.UUID(path_params['list_id'])
+    list = db.session.query(List).filter(List.uuid == list_uuid).first()
+    if list == None:
+        abort(404)
+
+    db.session.delete(list)
+    db.session.commit()
+    return Response(status=204)
