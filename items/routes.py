@@ -2,7 +2,7 @@ from . import bp
 from db import db
 from .models import Item
 from .serializers import ItemSchema
-from .validators import GetItemValidationSchema
+from .validators import GetItemValidationSchema, PostItemValidationSchema
 from flask import request, abort
 from marshmallow import ValidationError
 import uuid
@@ -28,6 +28,26 @@ def show(item_id):
     if item == None:
         abort(404)
 
+    schema = ItemSchema()
+    result = schema.dumps(item)
+    return result
+
+@bp.route('/', methods=['POST'])
+def create():
+    content_type = request.headers.get('Content-Type')
+    if content_type != 'application/json':
+        return 'Content-Type not supported!', 400
+
+    try:
+        body = PostItemValidationSchema().load(request.json)
+    except ValidationError as err:
+        return err.messages
+
+    item = Item(
+        name=body['name']
+    )
+    db.session.add(item)
+    db.session.commit()
     schema = ItemSchema()
     result = schema.dumps(item)
     return result

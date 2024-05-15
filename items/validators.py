@@ -11,3 +11,6 @@ class GetItemsValidationSchema(Schema):
     completed = fields.Bool()
     class Meta:
             unknown = EXCLUDE
+
+class PostItemValidationSchema(Schema):
+    name = fields.Str(validate=validate.Length(min=0, max=60))

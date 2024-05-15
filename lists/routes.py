@@ -5,7 +5,7 @@ from .serializers import ListSchema
 from .validators import GetListValidationSchema, PostListValidationSchema
 from flask import jsonify, request, abort, Response
 from marshmallow import ValidationError
-from items.nested_controllers import item_index_by_list
+from items.nested_controllers import item_index_by_list, item_create_by_list
 import uuid
 
 
@@ -105,3 +105,17 @@ def item_index(list_id):
         abort(404)
 
     return item_index_by_list(list)
+
+@bp.route('/<list_id>/items', methods=['POST'])
+def item_create(list_id):
+    try:
+        path_params = GetListValidationSchema().load(request.view_args)
+    except ValidationError as err:
+        return err.messages, 400
+
+    list_uuid = uuid.UUID(path_params['list_id'])
+    list = db.session.query(List).filter(List.uuid == list_uuid).first()
+    if list == None:
+        abort(404)
+
+    return item_create_by_list(list)
