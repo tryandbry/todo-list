@@ -3,7 +3,7 @@ from db import db
 from .models import Item
 from .serializers import ItemSchema
 from .validators import GetItemValidationSchema, PostItemValidationSchema, PatchItemValidationSchema
-from flask import request, abort
+from flask import request, abort, Response
 from marshmallow import ValidationError
 import uuid
 
@@ -59,3 +59,19 @@ def update(item_id):
     schema = ItemSchema()
     result = schema.dumps(item)
     return result
+
+@bp.route('/<item_id>', methods=['DELETE'])
+def destroy(item_id):
+    try:
+        path_params = GetItemValidationSchema().load(request.view_args)
+    except ValidationError as err:
+        return err.messages, 400
+
+    item_uuid = uuid.UUID(path_params['item_id'])
+    item = db.session.query(Item).filter(Item.uuid == item_uuid).first()
+    if item == None:
+        abort(404)
+
+    db.session.delete(item)
+    db.session.commit()
+    return Response(status=204)
