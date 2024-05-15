@@ -14,3 +14,7 @@ class GetItemsValidationSchema(Schema):
 
 class PostItemValidationSchema(Schema):
     name = fields.Str(validate=validate.Length(min=0, max=60))
+
+class PatchItemValidationSchema(Schema):
+    name = fields.Str(validate=validate.Length(min=0, max=60))
+    completed = fields.Bool()
