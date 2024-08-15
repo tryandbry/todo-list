@@ -10,6 +10,7 @@ sqlalchemy = "*"
 pymysql = "*"
 cryptography = "*"
 marshmallow = "*"
+flask-cors = "*"
 
 [dev-packages]
 
