@@ -25,6 +25,7 @@ Migrate database
 ```
 make db.migrate
 ```
+Note: password is `password`
 
 Migrate database (manually)
 ```
@@ -34,7 +35,6 @@ from items.models import Item
 from db import db
 db.create_all()
 ```
-Note: password is `password`
 
 Seed database
 ```
