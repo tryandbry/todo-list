@@ -1,4 +1,4 @@
-openapi: '3.1.0'
+openapi: '3.0.3'
 info:
   title: Todo List API
   version: '0.1'
@@ -7,6 +7,8 @@ servers:
 paths:
   /health:
     get:
+      description: health status
+      summary: health status
       responses:
         200:
           description: Service is healthy
@@ -15,16 +17,66 @@ paths:
               schema:
                 type: string
                 example: OK
-  /lists:
+      tags:
+        - health
+  /lists/:
     get:
+      description: Get all lists
+      summary: Get all lists
       responses:
         200:
-          description: Get all lists
+          description: OK
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/listCollection"
+      tags:
+        - lists
+    post:
+      description: Create a new list
+      summary: Create list
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  $ref: "#/components/schemas/listName"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/list"
+      tags:
+        - lists
+  /lists/{listId}:
+    get:
+      description: Get a specific list by listId
+      summary: Get a specific list
+      parameters:
+        - $ref: "#/components/parameters/listIdParam"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/list"
+      tags:
+        - lists
 components:
+  parameters:
+    listIdParam:
+      name: listId
+      description: A UUID identifier for the list record
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/listId"
   schemas:
     listCollection:
       type: array
@@ -34,18 +86,33 @@ components:
       type: object
       properties:
         listId:
-          type: string
-          description: A UUID identifier for the list record
-          example: fedc4195-c648-4cce-aed3-8295e4daf9de
-        name:
-          type: string
-          description: The title of the list
-          example: pikachu
+          $ref: "#/components/schemas/listId"
+        listName:
+          $ref: "#/components/schemas/listName"
         createdAt:
-          type: string
-          description: Timestamp in ISO 8601 format for when the list record was created.
-          example: 2024-05-14T01:12:39
+          $ref: "#/components/schemas/createdAt"
         updatedAt:
-          type: string
-          description: Timestamp in ISO 8601 format for when the list record was last updated.
-          example: 2024-05-14T01:12:39
+          $ref: "#/components/schemas/updatedAt"
+    listName:
+      type: string
+      description: The title of the list
+      example: pikachu
+      minimum: 0
+      maximum: 60
+    listId:
+      type: string
+      description: A UUID identifier for the list record
+      example: fedc4195-c648-4cce-aed3-8295e4daf9de
+    createdAt:
+      type: string
+      description: Timestamp in ISO 8601 format for when the record was created.
+      example: 2024-05-14T01:12:39
+    updatedAt:
+      type: string
+      description: Timestamp in ISO 8601 format for when the record was last updated.
+      example: 2024-05-14T01:12:39
+tags:
+  - name: health
+    description: Health check
+  - name: lists
+    description: Todo lists.  A [todo] list is a collection of items.
