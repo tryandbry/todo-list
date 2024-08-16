@@ -68,6 +68,39 @@ paths:
                 $ref: "#/components/schemas/list"
       tags:
         - lists
+    patch:
+      description: Update an existing list
+      summary: Edit list
+      parameters:
+        - $ref: "#/components/parameters/listIdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  $ref: "#/components/schemas/listName"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/list"
+      tags:
+        - lists
+    delete:
+      description: Delete a list
+      summary: Delete a list
+      parameters:
+        - $ref: "#/components/parameters/listIdParam"
+      responses:
+        204:
+          description: OK (list deleted)
+      tags:
+        - lists
 components:
   parameters:
     listIdParam:
