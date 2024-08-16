@@ -101,6 +101,108 @@ paths:
           description: OK (list deleted)
       tags:
         - lists
+  /items/:
+    get:
+      description: Get all items
+      summary: Get all items
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/itemCollection"
+      tags:
+        - items
+  /items/{itemId}:
+    get:
+      description: Get a specific item by itemId
+      summary: Get a specific item
+      parameters:
+        - $ref: "#/components/parameters/itemIdParam"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/item"
+      tags:
+        - items
+    patch:
+      description: Update an existing item
+      summary: Edit item
+      parameters:
+        - $ref: "#/components/parameters/itemIdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  $ref: "#/components/schemas/itemName"
+                completed:
+                  $ref: "#/components/schemas/itemCompleted"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/item"
+      tags:
+        - items
+    delete:
+      description: Delete a item
+      summary: Delete a item
+      parameters:
+        - $ref: "#/components/parameters/itemIdParam"
+      responses:
+        204:
+          description: OK (item deleted)
+      tags:
+        - items
+  /lists/{listId}/items:
+    get:
+      description: Get a list's items
+      summary: Get items by list
+      parameters:
+        - $ref: "#/components/parameters/listIdParam"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/itemCollection"
+      tags:
+        - items
+    # TODO
+    post:
+      description: (TODO) Create a new item associated with a list
+      summary: (TODO) Create item
+      parameters:
+        - $ref: "#/components/parameters/listIdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  $ref: "#/components/schemas/itemName"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/item"
+      tags:
+        - items
 components:
   parameters:
     listIdParam:
@@ -110,6 +212,13 @@ components:
       required: true
       schema:
         $ref: "#/components/schemas/listId"
+    itemIdParam:
+      name: itemId
+      description: A UUID identifier for the item record
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/itemId"
   schemas:
     listCollection:
       type: array
@@ -136,6 +245,37 @@ components:
       type: string
       description: A UUID identifier for the list record
       example: fedc4195-c648-4cce-aed3-8295e4daf9de
+    itemCollection:
+      type: array
+      items:
+        $ref: "#/components/schemas/item"
+    item:
+      type: object
+      properties:
+        itemId:
+          $ref: "#/components/schemas/itemId"
+        itemName:
+          $ref: "#/components/schemas/itemName"
+        itemCompleted:
+          $ref: "#/components/schemas/itemCompleted"
+        createdAt:
+          $ref: "#/components/schemas/createdAt"
+        updatedAt:
+          $ref: "#/components/schemas/updatedAt"
+    itemName:
+      type: string
+      description: The title of the item
+      example: milk
+      minimum: 0
+      maximum: 60
+    itemId:
+      type: string
+      description: A UUID identifier for the item record
+      example: fedc4195-c648-4cce-aed3-8295e4daf9de
+    itemCompleted:
+      type: boolean
+      description: Whether or not the [todo] item was completed
+      example: true
     createdAt:
       type: string
       description: Timestamp in ISO 8601 format for when the record was created.
@@ -148,4 +288,6 @@ tags:
   - name: health
     description: Health check
   - name: lists
-    description: Todo lists.  A [todo] list is a collection of items.
+    description: Todo lists.  A list is a collection of items.
+  - name: items
+    description: Todo items.  A task on a list.
