@@ -179,10 +179,9 @@ paths:
                 $ref: "#/components/schemas/itemCollection"
       tags:
         - items
-    # TODO
     post:
-      description: (TODO) Create a new item associated with a list
-      summary: (TODO) Create item
+      description: Create a new item associated with a list
+      summary: Create item
       parameters:
         - $ref: "#/components/parameters/listIdParam"
       requestBody:
@@ -258,6 +257,11 @@ components:
           $ref: "#/components/schemas/itemName"
         itemCompleted:
           $ref: "#/components/schemas/itemCompleted"
+        list:
+          type: object
+          properties:
+            listId:
+              $ref: "#/components/schemas/listId"
         createdAt:
           $ref: "#/components/schemas/createdAt"
         updatedAt:
