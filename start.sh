@@ -8,3 +8,7 @@ export MYSQL_USER=app
 export MYSQL_PASSWORD=password
 export MYSQL_HOST=127.0.0.1
 export DATABASE_URI="mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}/${MYSQL_DATABASE}"
+
+# for testing
+export TEST_MYSQL_DATABASE=todo_test
+export TEST_DATABASE_URI="mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}/${TEST_MYSQL_DATABASE}"
