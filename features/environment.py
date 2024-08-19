@@ -6,7 +6,6 @@ from app import create_app
 
 @fixture
 def app_client(context, *args, **kwargs):
-    print("INSIDE app_client!!")
     app_instance = create_app(TestConfig)
     # have to manually push an app context:
     # to be able to query the database in test
