@@ -13,6 +13,7 @@ marshmallow = "*"
 flask-cors = "*"
 
 [dev-packages]
+behave = "*"
 
 [requires]
 python_version = "3.12"
