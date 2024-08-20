@@ -13,7 +13,7 @@ class List(TimestampMixin, db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(255))
     uuid: Mapped[Uuid] = mapped_column(Uuid, unique=True, default=uuid.uuid4)
-    items: Mapped[typing.List["Item"]] = relationship(
+    items: Mapped[typing.List["Item"]] = relationship(  # noqa: F821
         "Item",
         back_populates="list",
         cascade="all, delete",

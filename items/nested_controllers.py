@@ -20,6 +20,7 @@ def item_index_by_list(list):
     result = schema.dumps(items)
     return result
 
+
 def item_create_by_list(list):
     content_type = request.headers.get('Content-Type')
     if content_type != 'application/json':

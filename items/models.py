@@ -17,4 +17,5 @@ class Item(TimestampMixin, db.Model):
         "lists.id",
         ondelete="CASCADE"
     ))
-    list: Mapped["List"] = relationship("List", back_populates="items")
+    list: Mapped["List"] = \
+        relationship("List", back_populates="items")  # noqa: F821
