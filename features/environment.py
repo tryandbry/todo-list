@@ -1,5 +1,6 @@
 import os
 from behave import fixture, use_fixture
+# re-use basedir from config for sqlite use case
 from config import basedir
 from app import create_app
 from db import db
