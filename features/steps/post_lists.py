@@ -10,7 +10,7 @@ def step_given_list_name(context):
     pass
 
 
-@when('we POST /lists')
+@when('we POST /lists/')
 def step_when_post_lists(context):
     context.response = context.client.post(
         '/lists/',
