@@ -4,6 +4,7 @@ from sqlalchemy import String, Uuid, Boolean, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from db import db
 from db.timestamp_mixin import TimestampMixin
+from lists.models import List
 
 
 @dataclass

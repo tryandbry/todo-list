@@ -5,6 +5,7 @@ from sqlalchemy import String, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from db import db
 from db.timestamp_mixin import TimestampMixin
+from items.models import Item
 
 
 @dataclass

@@ -2,7 +2,7 @@ from . import bp
 from db import db
 from .models import Item
 from .serializers import ItemSchema
-from .validators import GetItemValidationSchema, PostItemValidationSchema, PatchItemValidationSchema
+from .validators import GetItemValidationSchema, PatchItemValidationSchema
 from flask import request, abort, Response
 from marshmallow import ValidationError
 import uuid
@@ -16,6 +16,7 @@ def index():
     result = schema.dumps(items)
     return result
 
+
 @bp.route('/<item_id>', methods=['GET'])
 def show(item_id):
     try:
@@ -25,12 +26,13 @@ def show(item_id):
 
     item_uuid = uuid.UUID(path_params['item_id'])
     item = db.session.query(Item).filter(Item.uuid == item_uuid).first()
-    if item == None:
+    if item is None:
         abort(404)
 
     schema = ItemSchema()
     result = schema.dumps(item)
     return result
+
 
 @bp.route('/<item_id>', methods=['PATCH'])
 def update(item_id):
@@ -46,7 +48,7 @@ def update(item_id):
 
     item_uuid = uuid.UUID(path_params['item_id'])
     item = db.session.query(Item).filter(Item.uuid == item_uuid).first()
-    if item == None:
+    if item is None:
         abort(404)
 
     if 'name' in body_params:
@@ -60,6 +62,7 @@ def update(item_id):
     result = schema.dumps(item)
     return result
 
+
 @bp.route('/<item_id>', methods=['DELETE'])
 def destroy(item_id):
     try:
@@ -69,7 +72,7 @@ def destroy(item_id):
 
     item_uuid = uuid.UUID(path_params['item_id'])
     item = db.session.query(Item).filter(Item.uuid == item_uuid).first()
-    if item == None:
+    if item is None:
         abort(404)
 
     db.session.delete(item)

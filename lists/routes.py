@@ -3,7 +3,7 @@ from db import db
 from .models import List
 from .serializers import ListSchema
 from .validators import GetListValidationSchema, PostListValidationSchema
-from flask import jsonify, request, abort, Response
+from flask import request, abort, Response
 from marshmallow import ValidationError
 from items.nested_controllers import item_index_by_list, item_create_by_list
 import uuid
@@ -17,6 +17,7 @@ def index():
     result = schema.dumps(lists)
     return result
 
+
 @bp.route('/<list_id>', methods=['GET'])
 def show(list_id):
     try:
@@ -26,12 +27,13 @@ def show(list_id):
 
     list_uuid = uuid.UUID(path_params['list_id'])
     list = db.session.query(List).filter(List.uuid == list_uuid).first()
-    if list == None:
+    if list is None:
         abort(404)
 
     schema = ListSchema()
     result = schema.dumps(list)
     return result
+
 
 @bp.route('/', methods=['POST'])
 def create():
@@ -53,6 +55,7 @@ def create():
     result = schema.dumps(list)
     return result
 
+
 @bp.route('/<list_id>', methods=['PATCH'])
 def update(list_id):
     content_type = request.headers.get('Content-Type')
@@ -67,7 +70,7 @@ def update(list_id):
 
     list_uuid = uuid.UUID(path_params['list_id'])
     list = db.session.query(List).filter(List.uuid == list_uuid).first()
-    if list == None:
+    if list is None:
         abort(404)
 
     list.name = body_params['name']
@@ -75,6 +78,7 @@ def update(list_id):
     schema = ListSchema()
     result = schema.dumps(list)
     return result
+
 
 @bp.route('/<list_id>', methods=['DELETE'])
 def destroy(list_id):
@@ -85,12 +89,13 @@ def destroy(list_id):
 
     list_uuid = uuid.UUID(path_params['list_id'])
     list = db.session.query(List).filter(List.uuid == list_uuid).first()
-    if list == None:
+    if list is None:
         abort(404)
 
     db.session.delete(list)
     db.session.commit()
     return Response(status=204)
+
 
 @bp.route('/<list_id>/items', methods=['GET'])
 def item_index(list_id):
@@ -101,10 +106,11 @@ def item_index(list_id):
 
     list_uuid = uuid.UUID(path_params['list_id'])
     list = db.session.query(List).filter(List.uuid == list_uuid).first()
-    if list == None:
+    if list is None:
         abort(404)
 
     return item_index_by_list(list)
+
 
 @bp.route('/<list_id>/items', methods=['POST'])
 def item_create(list_id):
@@ -115,7 +121,7 @@ def item_create(list_id):
 
     list_uuid = uuid.UUID(path_params['list_id'])
     list = db.session.query(List).filter(List.uuid == list_uuid).first()
-    if list == None:
+    if list is None:
         abort(404)
 
     return item_create_by_list(list)
