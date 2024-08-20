@@ -5,7 +5,6 @@ from sqlalchemy import String, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from db import db
 from db.timestamp_mixin import TimestampMixin
-from items.models import Item
 
 
 @dataclass
@@ -14,7 +13,7 @@ class List(TimestampMixin, db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(255))
     uuid: Mapped[Uuid] = mapped_column(Uuid, unique=True, default=uuid.uuid4)
-    items: Mapped[typing.List["Item"]] = relationship(
+    items: Mapped[typing.List["Item"]] = relationship(  # noqa: F821
         "Item",
         back_populates="list",
         cascade="all, delete",

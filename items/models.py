@@ -4,7 +4,6 @@ from sqlalchemy import String, Uuid, Boolean, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from db import db
 from db.timestamp_mixin import TimestampMixin
-from lists.models import List
 
 
 @dataclass
@@ -18,4 +17,5 @@ class Item(TimestampMixin, db.Model):
         "lists.id",
         ondelete="CASCADE"
     ))
-    list: Mapped["List"] = relationship("List", back_populates="items")
+    list: Mapped["List"] = \
+        relationship("List", back_populates="items")  # noqa: F821
