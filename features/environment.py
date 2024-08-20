@@ -11,7 +11,7 @@ def app_client(context, *args, **kwargs):
     app_instance = create_app(TestConfig)
     # have to manually push an app context:
     # to be able to query the database in test
-    # ref: https://flask.palletsprojects.com/en/2.3.x/appcontext/#manually-push-a-context
+    # ref: https://flask.palletsprojects.com/en/2.3.x/appcontext/#manually-push-a-context # noqa: E501
     app_instance.app_context().push()
     context.client = app_instance.test_client()
     yield context.client
