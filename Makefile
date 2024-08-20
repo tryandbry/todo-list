@@ -11,7 +11,11 @@ shell:
 
 .PHONY: test
 test:
-	pipenv run behave --no-capture --no-color
+	pipenv run behave --no-capture --no-color --no-skipped --tags=wip
+
+.PHONY: test.all
+test.all:
+	pipenv run behave
 
 .PHONY: db.start
 db.start:
