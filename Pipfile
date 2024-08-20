@@ -14,6 +14,7 @@ flask-cors = "*"
 
 [dev-packages]
 behave = "*"
+faker = "*"
 
 [requires]
 python_version = "3.12"
