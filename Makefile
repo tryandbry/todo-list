@@ -9,6 +9,14 @@ run: start
 shell:
 	FLASK_APP=app FLASK_ENV=development pipenv run flask shell
 
+.PHONY: test
+test:
+	pipenv run behave --no-capture --no-color --no-skipped --tags=wip
+
+.PHONY: test.all
+test.all:
+	pipenv run behave
+
 .PHONY: db.start
 db.start:
 	docker compose up -d db
@@ -32,3 +40,11 @@ db.client:
 .PHONY: db.dump
 db.dump:
 	mysqldump -h ${MYSQL_HOST} -u root -p ${MYSQL_DATABASE} > db/todo.sql
+
+.PHONY: db.test.create
+db.test.create:
+	mysql -u root -h ${MYSQL_HOST} -p < db/test_setup.sql
+
+.PHONY: db.test.migrate
+db.test.migrate:
+	mysql -u ${MYSQL_USER} -h ${MYSQL_HOST} -p ${TEST_MYSQL_DATABASE} < db/migrate.sql
