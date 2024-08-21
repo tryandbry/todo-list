@@ -1,7 +1,5 @@
-import os
 from behave import fixture, use_fixture
-# re-use basedir from config for sqlite use case
-from config import basedir
+from config import Config
 from app import create_app
 from db import db
 from lists.models import List
@@ -40,9 +38,9 @@ def after_feature(context, feature):
     context.app_context.pop()
 
 
-class TestConfig:
-    SECRET_KEY = os.environ.get('SECRET_KEY')
-    SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URI')\
-        or 'sqlite:///' + os.path.join(basedir, 'test.db')
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+class TestConfig(Config):
     TESTING = True
+
+    @property
+    def SQLALCHEMY_DATABASE_URI(self):
+        return self.DB_STRATEGY.test_database_uri()
