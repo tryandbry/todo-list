@@ -8,6 +8,10 @@ services:
             FLASK_ENV: development
             SECRET_KEY: abc123
             MYSQL_HOST: db
+            MYSQL_DATABASE: todo
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_USER: app
+            MYSQL_PASSWORD: password
         ports:
             - 5000:5000
         volumes:
