@@ -1,4 +1,4 @@
-FROM python:alpine3.19
+FROM python:3.12.5-alpine
 
 RUN apk add make
 RUN pip install pipenv
