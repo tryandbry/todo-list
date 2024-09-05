@@ -1,0 +1,1 @@
+web: pipenv run gunicorn "app:create_app()"
