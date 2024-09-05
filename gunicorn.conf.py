@@ -1,5 +1,4 @@
-import os
-
-bind = os.environ.get('PORT', '5000')
+# will use 0.0.0.0:$PORT if $PORT is defined
+# i.e. define a $PORT env variable
 accesslog = '-'
 wsgi_app = 'app:create_app()'
