@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.17.14/swagger-ui.css">
+
+  <title>Todo List API Swagger UI</title>
+
+<body>
+
+  <div id="todo-list-api-docs" />
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.17.14/swagger-ui-bundle.js"></script>
+  <script>
+
+    window.onload = function () {
+
+      const ui = SwaggerUIBundle({
+        url: "oas.yml",
+        dom_id: "#todo-list-api-docs",
+        deepLinking: true,
+      })
+
+    }
+
+  </script>
+
+</body>
+
+</html>

@@ -3,8 +3,8 @@ info:
   title: Todo List API
   version: '0.1'
 servers:
+  - url: https://api.todolist.tryandbry.com
   - url: http://localhost:5000
-  - url: https://todo-list-tryandbry-3293c6e187a8.herokuapp.com
 paths:
   /health:
     get:
