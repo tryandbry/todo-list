@@ -7,3 +7,4 @@ export MYSQL_DATABASE=todo
 export MYSQL_USER=app
 export MYSQL_PASSWORD=password
 export MYSQL_HOST=127.0.0.1
+export PORT=5000
