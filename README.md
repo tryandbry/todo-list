@@ -3,35 +3,45 @@
 - [Todo List](#todo-list)
   - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
-  - [Installation](#installation)
   - [Try it out now](#try-it-out-now)
-  - [Local Development Quick Start](#local-development-quick-start)
-  - [Testing](#testing)
+  - [Getting Started](#getting-started)
+    - [Installation](#installation)
+    - [Set Environment Variables](#set-environment-variables)
+    - [Database Setup](#database-setup)
+    - [Start the app](#start-the-app)
+    - [Try it out](#try-it-out)
+  - [Local Testing](#local-testing)
     - [Setup](#setup)
     - [Run tests](#run-tests)
 
 ## Overview
-An example app exploring the use of:
+An API backend for a todo list application.
+
+This app explores the use of the following libraries:
 - Flask
 - Flask blueprints
 - Flask-SQLAlchemy
 - Marshmallow
 
-## Installation
+## Try it out now
+The API is live on Heroku at [api.todolist.tryandbry.com](https://raw.githack.com/tryandbry/todo-list/main/index.html)!
+
+Try it out now with Swagger UI.
+
+## Getting Started
+### Installation
 Install dependencies
 ```
 pipenv install
 ```
 
-## Try it out now
-[Swagger UI](https://raw.githack.com/tryandbry/todo-list/feature/ssl/index.html)
-
-## Local Development Quick Start
+### Set Environment Variables
 Set environment variables
 ```
 source ./start.sh
 ```
 
+### Database Setup
 Start database
 ```
 docker compose up -d db
@@ -57,14 +67,19 @@ make db.seed
 ```
 Note: password is `password`
 
+### Start the app
 Start the app
 ```
 make start
 ```
 
-Try it out: http://localhost:5000/health
+### Try it out
+Health check endpoint: http://localhost:5000/health
 
-## Testing
+Swagger UI: [Todo List API](https://raw.githack.com/tryandbry/todo-list/main/index.html)</br>
+Note: Make sure to select `http://localhost:5000` as your server.
+
+## Local Testing
 Note: Tests rely on a test database.
 
 ### Setup
