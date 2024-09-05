@@ -4,7 +4,7 @@ info:
   version: '0.1'
 servers:
   - url: http://localhost:5000
-  - url: https://todo-list-tryandbry-3293c6e187a8.herokuapp.com
+  - url: https://api.todolist.tryandbry.com
 paths:
   /health:
     get:
