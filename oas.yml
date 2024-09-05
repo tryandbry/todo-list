@@ -4,6 +4,7 @@ info:
   version: '0.1'
 servers:
   - url: http://localhost:5000
+  - url: https://todo-list-tryandbry-3293c6e187a8.herokuapp.com
 paths:
   /health:
     get:
@@ -228,7 +229,7 @@ components:
       properties:
         listId:
           $ref: "#/components/schemas/listId"
-        listName:
+        name:
           $ref: "#/components/schemas/listName"
         createdAt:
           $ref: "#/components/schemas/createdAt"
@@ -253,9 +254,9 @@ components:
       properties:
         itemId:
           $ref: "#/components/schemas/itemId"
-        itemName:
+        name:
           $ref: "#/components/schemas/itemName"
-        itemCompleted:
+        completed:
           $ref: "#/components/schemas/itemCompleted"
         list:
           type: object
