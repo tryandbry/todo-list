@@ -4,7 +4,8 @@
   - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
   - [Installation](#installation)
-  - [Quick Start](#quick-start)
+  - [Try it out now](#try-it-out-now)
+  - [Local Development Quick Start](#local-development-quick-start)
   - [Testing](#testing)
     - [Setup](#setup)
     - [Run tests](#run-tests)
@@ -14,6 +15,7 @@ An example app exploring the use of:
 - Flask
 - Flask blueprints
 - Flask-SQLAlchemy
+- Marshmallow
 
 ## Installation
 Install dependencies
@@ -21,7 +23,10 @@ Install dependencies
 pipenv install
 ```
 
-## Quick Start
+## Try it out now
+[Swagger UI](https://raw.githack.com/tryandbry/todo-list/feature/ssl/index.html)
+
+## Local Development Quick Start
 Set environment variables
 ```
 source ./start.sh

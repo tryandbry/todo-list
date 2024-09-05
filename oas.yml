@@ -3,8 +3,8 @@ info:
   title: Todo List API
   version: '0.1'
 servers:
-  - url: http://localhost:5000
   - url: https://api.todolist.tryandbry.com
+  - url: http://localhost:5000
 paths:
   /health:
     get:
